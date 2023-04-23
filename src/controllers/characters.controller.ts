@@ -11,9 +11,11 @@ import {
 import { CharacterCreateDto } from 'src/models/character-create.model';
 import { CharacterDto } from 'src/models/character.model';
 import { CollectionResponse } from 'src/models/response.model';
+import { CharactersService } from 'src/services/characters.service';
 
 @Controller('characters')
 export class CharactersController {
+  constructor(private readonly charactersService: CharactersService) {}
   @Get()
   async getCharacters(
     @Query('name') name: string,
@@ -65,7 +67,7 @@ export class CharactersController {
   async createCharacter(
     @Body() characterCreateDto: CharacterCreateDto,
   ): Promise<CharacterDto> {
-    return {} as CharacterDto;
+    return this.charactersService.create(characterCreateDto);
   }
 
   @Post(':id/enemies')
@@ -81,7 +83,7 @@ export class CharactersController {
     @Param('id') id: string,
     @Body('accompliceId') accompliceId: string,
   ): Promise<CharacterDto> {
-    return {} as CharacterDto;
+    return this.charactersService.addAccomplice(id, accompliceId);
   }
 
   @Put()

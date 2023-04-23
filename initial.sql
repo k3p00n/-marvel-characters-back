@@ -36,7 +36,8 @@ CREATE OR REPLACE FUNCTION add_reverse_enemy_relationship()
   RETURNS TRIGGER AS $$
 BEGIN
   INSERT INTO enemy (character_id, enemy_id)
-  VALUES (NEW.enemy_id, NEW.character_id);
+  VALUES (NEW.enemy_id, NEW.character_id)
+  ON CONFLICT DO NOTHING;
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
@@ -64,7 +65,8 @@ CREATE OR REPLACE FUNCTION add_reverse_accomplice_relationship()
   RETURNS TRIGGER AS $$
 BEGIN
   INSERT INTO accomplice (character_id, accomplice_id)
-  VALUES (NEW.accomplice_id, NEW.character_id);
+  VALUES (NEW.accomplice_id, NEW.character_id)
+  ON CONFLICT DO NOTHING;
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
